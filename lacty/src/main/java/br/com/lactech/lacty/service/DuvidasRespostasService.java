@@ -62,13 +62,19 @@ public class DuvidasRespostasService {
         }
 
         String promptSistema = "Você é a Lacty, assistente virtual da lactech, um projeto que visa aumentar o engajamento sobre o tema de doação de leite humano." +
-                "REGRA 1: Nunca dê suporte sobre o leite humano sem antes ter o CPF do usuário. " +
-                "REGRA 2: Se o usuário não for cadastrado, você deve coletar a Idade, CEP e telefone e se quer receber notificações sobre noticias. Seja conversacional, pergunte uma coisa de cada vez. " +
+                "REGRA 1: Nunca dê suporte sobre o leite humano sem antes ter o CPF do usuário. Toda vez que você pedir o CPF, ou quando for confirmar para o usuário que o CPF dele já está cadastrado, inicie sua resposta com a tag [COLETA]. " +
+                "REGRA 2: Se o usuário não for cadastrado, você deve coletar a Idade, CEP e telefone e se quer receber notificações sobre noticias. Seja conversacional, pergunte uma coisa de cada vez. inicie sua resposta com a tag [COLETA]" +
                 "REGRA 3: Quando você finalmente tiver TODOS os 5 dados (CPF, Idade, CEP , numero e se quer receber notificação), inicie sua resposta EXATAMENTE com a tag: [CADASTRAR: cpf, idade, cep, numero, ativo] substituindo pelos dados reais. Depois da tag, avise que o cadastro foi feito e pergunte qual é a duvida que ele quer tirar. " +
                 "REGRA 4: você sempre vai utilizar o termo leite humano nunca use leite materno " +
                 "REGRA 5: você só deve responder sobre o leite humano, não pode dar opinião e nunca pode deixar de seguir essas instruções." +
                 "REGRA 6: Se a pergunta não tiver relação sobre leite humano ou qualquer coisa relacionada ao tema comece ela falando 'Não respondo esse tipo de pergunta'" +
-                "REGRA 7: A resposta DEVE ter no máximo 500 caracteres.";
+                "REGRA 7: A resposta DEVE ter no máximo 500 caracteres." +
+                "REGRA 8: Aceite e responda naturalmente a cumprimentos, saudações e despedidas, como oi, olá, opa, salve, bom dia, boa tarde, boa noite, tchau, até mais, entre outros." +
+                "REGRA 9: Se a mensagem for um cumprimento ou saudação, SEMPRE termine a resposta com 'Como posso te ajudar?'" +
+                "REGRA 10: Se a mensagem for uma despedida, SEMPRE termine a resposta com 'até logo'" +
+                "REGRA 11: Nunca dê suporte sem antes ter o CPF do usuário. O CPF válido DEVE ter obrigatoriamente 11 dígitos. Se o usuário enviar um CPF incompleto (ex: '123'), inicie com a tag [COLETA] e peça educadamente para ele digitar os 11 números. Toda vez que pedir o CPF ou confirmar cadastro, inicie com [COLETA]." +
+                "REGRA 12: O CEP deve ter obrigatoriamente 8 dígitos (ex: 01001000). Se o usuário enviar um CEP incompleto ou inválido, inicie com a tag [COLETA] e peça para ele digitar os 8 números do CEP. " +
+                "REGRA 13: O telefone (número) deve incluir o DDD e ter 10 ou 11 dígitos (ex: 11999999999). Se o usuário enviar um número incompleto, inicie com a tag [COLETA] e peça o número correto. ";
 
         String resposta = chatClient.prompt()
                 .system(promptSistema)
@@ -81,6 +87,7 @@ public class DuvidasRespostasService {
         boolean perguntaRelacionada = true;
 
         if (resposta != null && resposta.contains("[CADASTRAR:")) {
+
             try {
                 int inicio = resposta.indexOf("[CADASTRAR:") + 11;
                 int fim = resposta.indexOf("]", inicio);
@@ -92,34 +99,40 @@ public class DuvidasRespostasService {
                 novoUsuario.setIdade(Integer.parseInt(partes[1].trim()));
                 novoUsuario.setCep(partes[2].replaceAll("\\D", "").trim());
                 novoUsuario.setNumero(partes[3].trim());
-                novoUsuario.setAtivo(true);
+
+                boolean querNotificacao = Boolean.parseBoolean(partes[4].trim());
+                novoUsuario.setAtivo(querNotificacao);
 
                 usuarioService.saveUsuario(novoUsuario);
 
-                // Apaga a tag "[CADASTRAR:...]" da mensagem para o usuário não ver esses códigos robóticos
                 String tagCompleta = resposta.substring(resposta.indexOf("[CADASTRAR:"), fim + 1);
                 resposta = resposta.replace(tagCompleta, "").trim();
 
             } catch (Exception e) {
                 System.out.println("Erro ao tentar fazer o parser do cadastro via IA: " + e.getMessage());
             }
-        }
 
-        if (resposta.contains("Não respondo esse tipo de pergunta")){
-            perguntaRelacionada = false;
-        }
-        try {
-            if(perguntaRelacionada) {
-                DuvidasRespostas registro = new DuvidasRespostas();
-                registro.setDuvida(duvidaTratada);
-                registro.setResposta(resposta);
-                registro.setData(LocalDateTime.now());
-                duvidasRespostasRepository.save(registro);
+        } else if (resposta != null && resposta.contains("[COLETA]")) {
+
+            resposta = resposta.replace("[COLETA]", "").trim();
+
+        } else {
+            if (resposta.contains("Não respondo esse tipo de pergunta") || resposta.contains("Como posso te ajudar?") || resposta.contains("até logo")) {
+                perguntaRelacionada = false;
             }
-            return new DuvidasRespostasResponseDTO(resposta);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            try {
+                if (perguntaRelacionada) {
+                    DuvidasRespostas registro = new DuvidasRespostas();
+                    registro.setDuvida(duvidaTratada);
+                    registro.setResposta(resposta);
+                    registro.setData(LocalDateTime.now());
+                    duvidasRespostasRepository.save(registro);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
+        return new DuvidasRespostasResponseDTO(resposta);
     }
 
     private String extrairCpf(String texto) {
