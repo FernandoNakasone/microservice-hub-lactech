@@ -1,4 +1,4 @@
-package com.github.cidarosa.eureka.server;
+package br.com.lactech.eureka.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
