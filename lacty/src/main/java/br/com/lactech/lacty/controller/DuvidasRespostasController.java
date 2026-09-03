@@ -8,14 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/chat")
+@RequestMapping("/lacty")
 public class DuvidasRespostasController {
 
 
     @Autowired
     private DuvidasRespostasService duvidasRespostasService;
 
-    @PostMapping("perguntar")
+    @PostMapping("/perguntar")
     public ResponseEntity<DuvidasRespostasResponseDTO> perguntar(@RequestBody DuvidasRespostasRequestDTO pergunta){
 
         DuvidasRespostasResponseDTO resposta = duvidasRespostasService.processarPergunta(pergunta);

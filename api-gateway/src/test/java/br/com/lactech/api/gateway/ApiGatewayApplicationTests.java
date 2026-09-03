@@ -1,4 +1,4 @@
-package br.com.fiap.api.gateway;
+package br.com.lactech.api.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
