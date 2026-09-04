@@ -17,7 +17,7 @@ import java.util.List;
 public class PerformanceChatbotController {
 
     @Autowired
-    PerformanceChatbotService performanceChatbotService;
+    private PerformanceChatbotService performanceChatbotService;
 
     @GetMapping
     public ResponseEntity<List<PerformanceChatbotResponseDTO>> getAllPerformancesChatbots(){

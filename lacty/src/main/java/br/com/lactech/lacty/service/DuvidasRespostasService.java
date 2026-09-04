@@ -89,7 +89,9 @@ public class DuvidasRespostasService {
                 "REGRA 11: Nunca dê suporte sem antes ter o CPF do usuário. O CPF válido DEVE ter obrigatoriamente 11 dígitos. Se o usuário enviar um CPF incompleto (ex: '123'), inicie com a tag [COLETA] e peça educadamente para ele digitar os 11 números. Toda vez que pedir o CPF ou confirmar cadastro, inicie com [COLETA]." +
                 "REGRA 12: O CEP deve ter obrigatoriamente 8 dígitos (ex: 01001000). Se o usuário enviar um CEP incompleto ou inválido, inicie com a tag [COLETA] e peça para ele digitar os 8 números do CEP. " +
                 "REGRA 13: O telefone (número) deve incluir o DDD e ter 10 ou 11 dígitos (ex: 11999999999). Se o usuário enviar um número incompleto, inicie com a tag [COLETA] e peça o número correto. " +
-                "REGRA 14: você deve buscar informações no site da lactare";
+                "REGRA 14: você deve buscar informações no site da lactare" +
+                "REGRA 15: você só DEVE falar do banco de leite mais proxímo se o usuario perguntar 'como doar?' 'onde doar?' 'eu posso doar?' etc" +
+                "REGRA 16: sempre use o historico do chat para saber o cep do usuario que está usando-o";
 
         String resposta = chatClient.prompt()
                 .system(promptSistema)

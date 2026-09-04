@@ -28,14 +28,14 @@ public class UsuarioController {
     }
 
     @GetMapping("/{cpf}")
-    public ResponseEntity< UsuarioResponseDTO> getUsuarioById(@PathVariable String cpf){
+    public ResponseEntity<UsuarioResponseDTO> getUsuarioById(@PathVariable String cpf){
          UsuarioResponseDTO usuarioResponseDTO = usuarioService.findUsuarioByCpf(cpf);
 
         return ResponseEntity.ok(usuarioResponseDTO);
     }
 
     @PostMapping
-    public ResponseEntity< UsuarioResponseDTO> createUsuario(@RequestBody @Valid UsuarioRequestDTO inputDTO){
+    public ResponseEntity<UsuarioResponseDTO> createUsuario(@RequestBody @Valid UsuarioRequestDTO inputDTO){
          UsuarioResponseDTO usuarioResponseDTO = usuarioService.saveUsuario(inputDTO);
 
         URI uri = ServletUriComponentsBuilder
@@ -48,7 +48,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{cpf}")
-    public ResponseEntity< UsuarioResponseDTO> updateUsuario(@PathVariable String cpf, @RequestBody @Valid UsuarioRequestDTO inputDTO){
+    public ResponseEntity<UsuarioResponseDTO> updateUsuario(@PathVariable String cpf, @RequestBody @Valid UsuarioRequestDTO inputDTO){
          UsuarioResponseDTO usuarioResponseDTO = usuarioService.updateUsuario(cpf, inputDTO);
 
         return ResponseEntity.ok(usuarioResponseDTO);

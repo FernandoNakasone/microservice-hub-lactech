@@ -1,9 +1,9 @@
-package br.com.lactech.lacty.exceptions.handler;
+package br.com.lactech.performanceWebsite.exceptions.handler;
 
-import br.com.lactech.lacty.exceptions.DatabaseException;
-import br.com.lactech.lacty.exceptions.ResourceNotFoundException;
-import br.com.lactech.lacty.exceptions.dto.CustomErrorDTO;
-import br.com.lactech.lacty.exceptions.dto.ValidationErrorDTO;
+import br.com.lactech.performanceWebsite.exceptions.DatabaseException;
+import br.com.lactech.performanceWebsite.exceptions.ResourceNotFoundException;
+import br.com.lactech.performanceWebsite.exceptions.dto.CustomErrorDTO;
+import br.com.lactech.performanceWebsite.exceptions.dto.ValidationErrorDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

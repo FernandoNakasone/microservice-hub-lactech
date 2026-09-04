@@ -1,17 +1,15 @@
-package  br.com.lactech.lacty;
+package br.com.lactech.performanceWebsite;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableFeignClients
 @EnableDiscoveryClient
-public class LactyApplication {
+public class PerformanceWebsiteApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LactyApplication.class, args);
+		SpringApplication.run(PerformanceWebsiteApplication.class, args);
 	}
 
 }

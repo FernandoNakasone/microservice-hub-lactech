@@ -58,7 +58,7 @@ public class UsuarioService {
         }
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional
     public void deleteUsuarioById(String cpf){
         if(!usuarioRepository.existsById(cpf)){
             throw new ResourceNotFoundException("Recurso não encontrado. cpf:" + cpf);

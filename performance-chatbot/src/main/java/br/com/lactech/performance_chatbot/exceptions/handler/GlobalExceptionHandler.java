@@ -1,9 +1,9 @@
-package br.com.lactech.lacty.exceptions.handler;
+package br.com.lactech.performance_chatbot.exceptions.handler;
 
-import br.com.lactech.lacty.exceptions.DatabaseException;
-import br.com.lactech.lacty.exceptions.ResourceNotFoundException;
-import br.com.lactech.lacty.exceptions.dto.CustomErrorDTO;
-import br.com.lactech.lacty.exceptions.dto.ValidationErrorDTO;
+import br.com.lactech.performance_chatbot.exceptions.DatabaseException;
+import br.com.lactech.performance_chatbot.exceptions.ResourceNotFoundException;
+import br.com.lactech.performance_chatbot.exceptions.dto.CustomErrorDTO;
+import br.com.lactech.performance_chatbot.exceptions.dto.ValidationErrorDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,17 +76,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-    // 500 - fallback para qualquer erro não tratado
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<CustomErrorDTO> handleGenericException(Exception e,
-                                                                 HttpServletRequest request) {
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
-        CustomErrorDTO err = new CustomErrorDTO(
-                Instant.now(), status.value(),
-                e.getMessage(),
-                request.getRequestURI()
-        );
+ //    500 - fallback para qualquer erro não tratado
+ @ExceptionHandler(Exception.class)
+ public ResponseEntity<CustomErrorDTO> handleGenericException(Exception e,
+                                                              HttpServletRequest request) {
+     HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
+     CustomErrorDTO err = new CustomErrorDTO(
+             Instant.now(), status.value(),
+             e.getMessage(),
+             request.getRequestURI()
+     );
 
-        return ResponseEntity.status(status).body(err);
-    }
+     return ResponseEntity.status(status).body(err);
+ }
 }
