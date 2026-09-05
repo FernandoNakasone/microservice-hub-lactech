@@ -1,6 +1,7 @@
 package  br.com.lactech.lacty.dto;
 
 import br.com.lactech.lacty.entities.DuvidasRespostas;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -14,11 +15,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DuvidasRespostasResponseDTO {
 
+    private Long id;
+    private String duvida;
     private String resposta;
+    private LocalDateTime data;
 
 
-    DuvidasRespostasResponseDTO(DuvidasRespostas duvidasRespostas){
+    public DuvidasRespostasResponseDTO(DuvidasRespostas duvidasRespostas){
+
+        id = duvidasRespostas.getId();
+        duvida = duvidasRespostas.getDuvida();
         resposta = duvidasRespostas.getResposta();
+        data = duvidasRespostas.getData();
     }
 
 }

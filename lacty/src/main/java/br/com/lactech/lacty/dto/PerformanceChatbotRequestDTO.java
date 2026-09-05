@@ -8,7 +8,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 public class PerformanceChatbotRequestDTO {
     private String cpf;
     private Long idDuvida;

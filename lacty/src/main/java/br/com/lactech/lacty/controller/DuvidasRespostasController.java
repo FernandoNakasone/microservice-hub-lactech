@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/lacty")
 public class DuvidasRespostasController {
@@ -21,6 +23,14 @@ public class DuvidasRespostasController {
         DuvidasRespostasResponseDTO resposta = duvidasRespostasService.processarPergunta(pergunta);
 
         return ResponseEntity.ok(resposta);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DuvidasRespostasResponseDTO>> getAllPerguntasRespostas(){
+
+        List<DuvidasRespostasResponseDTO> list = duvidasRespostasService.findAllPerguntasRespostas();
+
+        return ResponseEntity.ok(list);
     }
 
 }
