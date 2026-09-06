@@ -16,6 +16,7 @@ public class PerformanceWebsite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_interacao")
     private Long id;
 
     @Column(name = "url", nullable = false, length = 500)

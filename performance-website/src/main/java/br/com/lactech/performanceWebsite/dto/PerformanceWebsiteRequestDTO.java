@@ -33,7 +33,7 @@ public class PerformanceWebsiteRequestDTO {
     @NotNull(message = "O campo tempoCarregamentoMs não pode ser vazio, nulo ou em branco")
     @Positive(message = "O campo tempoCarregamentoMs deve ser positovo (maior que zero)")
     @Schema(example = "1205.5")
-    private Double TempoCarregamentoMs;
+    private Double tempoCarregamentoMs;
 
     @NotBlank(message = "O campo tipoDispositivo não pode ser vazio, nulo ou em branco")
     @Size(max = 30, message = "O campo tipoDispositivo deve ter no maximo 30 caractesres")
