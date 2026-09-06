@@ -123,7 +123,8 @@ public class DuvidasRespostasService {
                         + "REGRA 13: O telefone (número) deve incluir o DDD e ter 10 ou 11 dígitos (ex: 11999999999). Se o usuário enviar um número incompleto, inicie com a tag [COLETA] e peça o número correto. "
                         + "REGRA 14: você deve buscar informações no site da lactare"
                         + "REGRA 15: você só DEVE falar do banco de leite mais próximo se o usuario perguntar 'como doar?' 'onde doar?' 'eu posso doar?' etc"
-                        + "REGRA 16: sempre use o historico do chat para saber o cep do usuario que está usando-o";
+                        + "REGRA 16: sempre use o historico do chat para saber o cep do usuario que está usando-o"
+                        + "REGRA 17: Não fale o banco mais proximo após o usuario termianr o cadastro, somento quando ele pedir";
 
         String resposta = chatClient.prompt()
                 .system(promptSistema)
