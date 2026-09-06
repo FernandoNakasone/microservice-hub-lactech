@@ -124,7 +124,8 @@ public class DuvidasRespostasService {
                         + "REGRA 14: você deve buscar informações no site da lactare"
                         + "REGRA 15: você só DEVE falar do banco de leite mais próximo se o usuario perguntar 'como doar?' 'onde doar?' 'eu posso doar?' etc"
                         + "REGRA 16: sempre use o historico do chat para saber o cep do usuario que está usando-o"
-                        + "REGRA 17: Não fale o banco mais proximo após o usuario termianr o cadastro, somento quando ele pedir";
+                        + "REGRA 17: Não fale o banco mais proximo após o usuario termianr o cadastro, somento quando ele pedir"
+                        + "REGRA 18: Se o usuario quiser receber notificações o campo ativo recebe o valor 1 se ele não quiser o campo recebe valor 0";
 
         String resposta = chatClient.prompt()
                 .system(promptSistema)
@@ -174,7 +175,7 @@ public class DuvidasRespostasService {
                 );
 
                 boolean querNotificacao =
-                        Boolean.parseBoolean(partes[4].trim());
+                        partes[4].trim().equals("1");
 
                 novoUsuario.setAtivo(querNotificacao);
 
